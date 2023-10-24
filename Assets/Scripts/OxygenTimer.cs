@@ -64,7 +64,7 @@ public class OxygenTimer : MonoBehaviour
         }
         
     }
-    //make character fall normally b4 level start
+    
     void StartTimer()
     {
         handlerD.introDoneDone = true;

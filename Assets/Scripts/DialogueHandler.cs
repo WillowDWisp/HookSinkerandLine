@@ -34,6 +34,10 @@ public class DialogueHandler : MonoBehaviour
     TextMeshProUGUI dialogueOptTwoText;
     TextMeshProUGUI dialogueOptThreeText;
 
+    int opt1times = 0;
+    int opt2times = 0;
+    int opt3times = 0;
+
     int numOfAnswers;
     //what dialogue list is in use?
     int currentList = 0;
@@ -107,23 +111,30 @@ public class DialogueHandler : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Alpha1) && numOfAnswers == 2)
             {
-
+                LoadDialogue(1, 2, false, 3, currIndex, 2);
             }
             if (Input.GetKeyDown(KeyCode.Alpha2) && numOfAnswers == 2)
             {
-
+                LoadDialogue(1, 1, false, 3, currIndex, 2);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1) && numOfAnswers == 3)
             {
-                //LoadDialogue(currentList, )
+                
+                LoadDialogue(2, currIndex+=3, false, 4, currentOptionList++, 3);
+                opt1times++;
+
             }
             if (Input.GetKeyDown(KeyCode.Alpha2) && numOfAnswers == 3)
             {
+                LoadDialogue(2, currentOptionList+=3, false, 4, currIndex++, 3);
+                opt2times++;
 
             }
             if (Input.GetKeyDown(KeyCode.Alpha3) && numOfAnswers == 3)
             {
+                LoadDialogue(2, currentOptionList+=3, false, 4, currIndex++, 3);
+                opt3times++;
 
             }
         }

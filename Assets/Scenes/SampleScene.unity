@@ -1629,8 +1629,8 @@ Transform:
   m_LocalScale: {x: 2, y: 3, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1680473034}
   - {fileID: 626783459}
+  - {fileID: 1680473034}
   - {fileID: 1427042056}
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -1650,7 +1650,7 @@ MonoBehaviour:
   moveSpeed: 10
   groundDrag: 5
   jumpForce: 12
-  jumpCooldown: 0.1
+  jumpCooldown: 0.25
   airMultiplier: 0.4
   jumpKey: 32
   playerHeight: 2
@@ -2297,7 +2297,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 463630791}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &679358362
 GameObject:
@@ -3857,7 +3857,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.023285653, y: 0.023313126, z: 0.32}
+  m_Size: {x: 0.023285653, y: 0.023313126, z: 0.19}
   m_Center: {x: -0.010047192, y: 0.012457968, z: 0.05018526}
 --- !u!1 &917510296
 GameObject:
@@ -4168,8 +4168,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1617420281}
+  m_Children: []
   m_Father: {fileID: 1370571939}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7785,11 +7784,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617420277}
   m_LocalRotation: {x: -0.79276854, y: -0, z: -0, w: 0.6095228}
-  m_LocalPosition: {x: 0.10000038, y: 0.9045135, z: 3.4018023}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.13000107, y: 1.0342095, z: 1.0672674}
+  m_LocalScale: {x: 0.33333334, y: 0.3333334, z: 0.3333334}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 963194228}
+  m_Father: {fileID: 1680473034}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &1627214227
@@ -8140,9 +8139,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1617420281}
   m_Father: {fileID: 463630791}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1680473036
 CapsuleCollider:
