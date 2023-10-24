@@ -24,6 +24,8 @@ public class DialogueHandler : MonoBehaviour
     public bool npcDone;
     public bool baseReached;
 
+    [SerializeField] PlayerCamera PCam;
+
     //objects
     [SerializeField] Button dialogueBox;
     [SerializeField] Button dialogueOption1;
@@ -33,6 +35,8 @@ public class DialogueHandler : MonoBehaviour
     TextMeshProUGUI dialogueOptOneText;
     TextMeshProUGUI dialogueOptTwoText;
     TextMeshProUGUI dialogueOptThreeText;
+
+    BaseBetaDialogue BBDobj;
 
     int opt1times = 0;
     int opt2times = 0;
@@ -56,6 +60,7 @@ public class DialogueHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         InitializeDialogue();
         InitializeDict();
 
@@ -81,7 +86,10 @@ public class DialogueHandler : MonoBehaviour
         buttonTexts.Add(dialogueOptThreeText);
 
         EndDialogue(4);
+        BBDobj = FindObjectOfType<BaseBetaDialogue>();
         StartCoroutine("startSequence");
+
+
     }
 
     // Update is called once per frame
@@ -121,20 +129,26 @@ public class DialogueHandler : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha1) && numOfAnswers == 3)
             {
                 
-                LoadDialogue(2, currIndex+=3, false, 4, currentOptionList++, 3);
+                LoadDialogue(2, currentOptionList, false, 4, currIndex, 3);
                 opt1times++;
+                currentOptionList++;
+                currIndex += 3;
 
             }
             if (Input.GetKeyDown(KeyCode.Alpha2) && numOfAnswers == 3)
             {
-                LoadDialogue(2, currentOptionList+=3, false, 4, currIndex++, 3);
+                LoadDialogue(2, currentOptionList, false, 4, currIndex, 3);
                 opt2times++;
+                currentOptionList++;
+                currIndex += 3;
 
             }
             if (Input.GetKeyDown(KeyCode.Alpha3) && numOfAnswers == 3)
             {
-                LoadDialogue(2, currentOptionList+=3, false, 4, currIndex++, 3);
+                LoadDialogue(2, currentOptionList, false, 4, currIndex, 3);
                 opt3times++;
+                currentOptionList++;
+                currIndex += 3;
 
             }
         }
@@ -184,6 +198,22 @@ public class DialogueHandler : MonoBehaviour
         LoadDialogue(ListIndex, DialogueIndex, dialogueEnd, replyIndex, AnswerIndex, num);
     }
 
+   public void StartFinalDialogue()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            buttons[i].image.color = Color.blue;
+            buttonTexts[i].color = Color.white;
+        }
+        inDialogue = true;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        BBDobj.Section1();
+        PCam.sensX = 10;
+        PCam.sensY = 10;
+
+    }
+
     //the following 3 overloads load dialogue with 0, 1, and 2/3 replies respectively
     public void LoadDialogue(int ListIndex, int DialogueIndex, bool dialogueEnd)
     {
@@ -203,28 +233,8 @@ public class DialogueHandler : MonoBehaviour
         }
         
     }
-    //reply index is the index of the list containing the reply dialogue; this is for one given reply
-    void LoadDialogue(int ListIndex, int DialogueIndex, bool dialogueEnd, int replyIndex, int AnswerIndex)
-    {
-        if (dialogueEnd)
-        {
-            EndDialogue(2);
-        }
-        else
-        {
-            currentList = ListIndex;
-
-
-            List<string> L = ListOfLists[ListIndex];
-            List<string> D = ListOfLists[replyIndex];
-
-            dialogueText.text = L[DialogueIndex];
-            numOfAnswers = 1;
-            dialogueOptOneText.text = D[AnswerIndex] + " (Press Space to Continue)";
-        }
-
-
-    }
+ 
+    
     //this is for 2/3 reply dialogues
     void LoadDialogue(int ListIndex, int DialogueIndex, bool dialogueEnd, int replyIndex, int FirstAnswerIndex, int numAnswers)
     {
@@ -275,13 +285,10 @@ public class DialogueHandler : MonoBehaviour
     void InitializeIntro()
     {
         List<string> L = new List<string>();
-        L.Add("Dr. Michigan: Hey! I know it's only been 20 minutes since the breach but pay attention.");
-        L.Add("I don't have time to repeat this, so listen closely.");
-        L.Add("You need to get to the other base and get help, tell them that there's been a catastrophic containment breach.");
-        L.Add("You only have 3 minutes of oxygen in that tank, so don't dawdle.");
-        L.Add("Oh, one more thing: They're going to ask you for a passphrase.");
-        L.Add("The passphrase is- *static*");
-        L.Add("...");
+        L.Add("static ...an you hear me? Hello? Oh, Huron, I'm glad it's you.We have an emergency, I only have time to tell you this once. As you may know, twenty minutes ago tanks 27 - 81 all simultaneously broke.");
+        L.Add("This is a Class Zero Containment breach.The only way of stopping this is to get reinforcements from the neighboring base, our storeroom has already been taken over and flooded completely.");
+        L.Add("Our last remaining suit is by the exit there, we couldn't refill the tank so you have three minutes of air to get to Beta.Once you get there, just tell them-");
+        L.Add("*A deafeningly loud bang comes from the intercom. There won't be any more communications. You need to leave.");
         L.Add("[Clicking the door will start the game; In future runs, you can just click the door to skip this section.]");
         IntroDialogue = L;
     }
@@ -289,9 +296,9 @@ public class DialogueHandler : MonoBehaviour
     void InitializeNPC()
     {
         List<string> L = new List<string>();
-        L.Add("Hey! Where are you going in such a hurry?");
-        L.Add("... Ok bye I guess.");
-        L.Add("I see. Just tell them why you're there and they should let you in.");
+        L.Add("Hey, I heard something happening over at Alpha, what's going on?");
+        L.Add("...goodbye?");
+        L.Add("Oh, I just came from there. Tell them Atlan says you can go through, they'll understand if you tell them it's urgent. You can rest once you get there, take some medicine for your cold. Good luck!");
         NPCDialogue = L;
     }
 
@@ -309,8 +316,8 @@ public class DialogueHandler : MonoBehaviour
     void InitializeNPCDialogue()
     {
         List<string> L = new List<string>();
-        L.Add("canttalkgottagobye");
-        L.Add("There's been a breach at Research Station Alpha, and I'm going to get help.");
+        L.Add("Something important, I have to leave.");
+        L.Add("Containment breach, I'm going to Beta for help.");
         NPCDialogueOptions = L;
     }
 
@@ -339,5 +346,30 @@ public class DialogueHandler : MonoBehaviour
         L.Add("");
         L.Add("");
         BaseBetaDialogueOptions = L;
+    }
+
+
+
+    //unused
+    void LoadDialogue(int ListIndex, int DialogueIndex, bool dialogueEnd, int replyIndex, int AnswerIndex)
+    {
+        if (dialogueEnd)
+        {
+            EndDialogue(2);
+        }
+        else
+        {
+            currentList = ListIndex;
+
+
+            List<string> L = ListOfLists[ListIndex];
+            List<string> D = ListOfLists[replyIndex];
+
+            dialogueText.text = L[DialogueIndex];
+            numOfAnswers = 1;
+            dialogueOptOneText.text = D[AnswerIndex] + " (Press Space to Continue)";
+        }
+
+
     }
 }

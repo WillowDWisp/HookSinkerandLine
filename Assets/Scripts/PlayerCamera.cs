@@ -18,6 +18,11 @@ public class PlayerCamera : MonoBehaviour
         Cursor.visible = false;
     }
 
+    public void setCursorLock(CursorLockMode lockMode)
+    {
+        Cursor.lockState = lockMode;
+    }
+
     private void Update()
     {
         // get mouse input

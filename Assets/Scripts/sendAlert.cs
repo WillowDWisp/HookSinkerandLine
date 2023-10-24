@@ -5,10 +5,11 @@ using UnityEngine;
 public class sendAlert : MonoBehaviour
 {
     public DialogueHandler handler;
+    GameObject obj;
 
     private void Start()
     {
-        
+        obj = GetComponent<GameObject>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -25,7 +26,7 @@ public class sendAlert : MonoBehaviour
         }
         else if(this.name == "BaseBetaPlatform" && handler.introDoneDone && handler.npcDone)
         {
-            handler.StartDialogue(4, 2, 0, false, 4, 0, 3);
+            handler.StartFinalDialogue();
             
         }
         
@@ -34,7 +35,7 @@ public class sendAlert : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(this.name != "SpawnRoom")
+        if(this.name != "SpawnRoom" && this.name != "BaseBetaPlatform")
         {
         handler.EndDialogue(4);
         }

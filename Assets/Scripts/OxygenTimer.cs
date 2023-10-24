@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class OxygenTimer : MonoBehaviour
 {
@@ -15,20 +17,35 @@ public class OxygenTimer : MonoBehaviour
 
     DialogueHandler handlerD;
 
+    public AudioSource alarm;
+    [SerializeField] AudioSource ambient;
+
     [SerializeField] TextMeshProUGUI timer;
     [SerializeField] GameObject player;
     [SerializeField] GameObject teleportSpot;
+    [SerializeField] GameObject UnderwaterEffect;
+
+    RawImage UWEimage;
 
     // Start is called before the first frame update
     void Start()
     {
+        UWEimage = UnderwaterEffect.GetComponent<RawImage>();
+        UWEimage.enabled = false;
         handlerD = FindObjectOfType<DialogueHandler>();
         timer.color = Color.clear;
+        ambient.mute = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
+        
         if (isTimerRunning)
         {
 
@@ -70,6 +87,9 @@ public class OxygenTimer : MonoBehaviour
         handlerD.introDoneDone = true;
         handlerD.EndDialogue(4);
 
+        UWEimage.enabled = true;
+        ambient.mute = false;
+        alarm.mute = true;
         isTimerRunning = true;
         timer.color = Color.white;
         player.transform.position = teleportSpot.transform.position;
@@ -77,9 +97,10 @@ public class OxygenTimer : MonoBehaviour
         StartCoroutine("RunTimer");
     }
 
-    void StopTimer()
+    public void StopTimer()
     {
         isTimerRunning = false;
+        timer.color = Color.clear;
         StopAllCoroutines();
     }
 
